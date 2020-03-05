@@ -6,9 +6,12 @@
     </option>
   </select>
 
-  <app-currency
-    *ngFor="let rate of rates | keyvalue"
-    [rate]="rate"
-  >
-  </app-currency>
+  <div class="container">
+    <app-currency
+      *ngFor="let rate of rates | keyvalue"
+      [rate]="rate"
+      class="items"
+    >
+    </app-currency>
+  </div>
 </div>

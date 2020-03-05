@@ -1,8 +1,18 @@
 <div>
-    <ul *ngIf="rate">
-      <li *ngFor="let r of rate | keyvalue">
-        <h2 *ngIf="r.key === 'key'">{{ r.value }}</h2>
-        <span *ngIf="r.key === 'value'">{{ r.value | number:'1.4-4'}}</span>
-      </li>
-    </ul>
+    <div *ngIf="rate" class="item">
+      <div *ngFor="let r of rate | keyvalue">
+        <div class="currency-name">
+          <p *ngIf="r.key === 'key'">
+            {{ r.value }}
+          </p>
+        </div>
+
+        <div class="currency-value">
+          <p *ngIf="r.key === 'value'">
+            {{ r.value | currency:'USD':'symbol-narrow':'1.2-2' }}
+          </p>
+        </div>
+
+      </div>
+    </div>
 </div>
