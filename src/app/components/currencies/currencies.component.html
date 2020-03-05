@@ -1,0 +1,10 @@
+<div>
+  <p>{{ date }}</p>
+  <p>{{ base }}</p>
+
+  <app-currency
+    *ngFor="let rate of rates | keyvalue"
+    [rate]="rate"
+  >
+  </app-currency>
+</div>

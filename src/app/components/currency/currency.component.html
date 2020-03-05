@@ -1,0 +1,7 @@
+<div>
+    <ul *ngIf="rate">
+      <li *ngFor="let r of rate | keyvalue">
+        {{ r.key === 'key' ? 'Currency' : 'Value' }}: {{ r.value }}
+      </li>
+    </ul>
+</div>
