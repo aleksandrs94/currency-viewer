@@ -1,4 +1,4 @@
-import { Component, OnInit, ɵConsole } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CurrencyService } from '../../services/currency.service';
 
 @Component({
@@ -10,13 +10,14 @@ export class CurrenciesComponent implements OnInit {
   rates: any;
   base: any;
   date: any;
-  baseDropDown = [];
+  baseDropDown: Array<string>;
 
   constructor(private currencyService: CurrencyService) { }
 
   ngOnInit(): void {
 
     this.currencyService.getCurrencies().subscribe(data => {
+      this.baseDropDown = [];
       for (const key in data) {
         if (key === 'rates') {
           for (const curr in data[key]) {
@@ -25,7 +26,9 @@ export class CurrenciesComponent implements OnInit {
               this.baseDropDown.push(curr);
             }
           }
-          this.baseDropDown.push('EUR');
+          if (!this.baseDropDown.includes(this.base)) {
+            this.baseDropDown.push(this.base || 'EUR');
+          }
           this.baseDropDown.sort();
           // console.log(this.baseDropDown);
           // console.log(this.rates);
@@ -58,6 +61,7 @@ export class CurrenciesComponent implements OnInit {
 
   changeBaseOrDate(currencies) {
     this.currencyService.getDifferent(currencies).subscribe(data => {
+      this.baseDropDown = [];
       for (const key in data) {
         if (key === 'rates') {
           for (const curr in data[key]) {
@@ -66,6 +70,11 @@ export class CurrenciesComponent implements OnInit {
               this.baseDropDown.push(curr);
             }
           }
+          if (!this.baseDropDown.includes(this.base)) {
+            this.baseDropDown.push(this.base || 'EUR');
+          }
+          this.baseDropDown.sort();
+          // console.log(this.baseDropDown);
           // console.log(this.rates);
         } else if (key === 'date') {
           this.date = data[key];
