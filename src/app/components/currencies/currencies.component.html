@@ -1,6 +1,10 @@
 <div>
-  <p>{{ date }}</p>
-  <p>{{ base }}</p>
+  <input [value]="date" [(ngModel)]="date" (change)="changeDate(date)" />
+  <select [(ngModel)]="base" (change)="changeBase(base)">
+    <option *ngFor="let option of baseDropDown">
+      {{ option }}
+    </option>
+  </select>
 
   <app-currency
     *ngFor="let rate of rates | keyvalue"

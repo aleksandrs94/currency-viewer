@@ -1,7 +1,8 @@
 <div>
     <ul *ngIf="rate">
       <li *ngFor="let r of rate | keyvalue">
-        {{ r.key === 'key' ? 'Currency' : 'Value' }}: {{ r.value }}
+        <h2 *ngIf="r.key === 'key'">{{ r.value }}</h2>
+        <span *ngIf="r.key === 'value'">{{ r.value | number:'1.4-4'}}</span>
       </li>
     </ul>
 </div>
