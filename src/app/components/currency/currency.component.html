@@ -1,18 +1,16 @@
 <div>
-    <div *ngIf="rate" class="item">
-      <div *ngFor="let r of rate | keyvalue">
-        <div class="currency-name">
-          <p *ngIf="r.key === 'key'">
-            {{ r.value }}
+    <div *ngIf="name && value" class="item">
+        <div class="name-wrapper">
+          <p>
+            {{ name }}
           </p>
         </div>
 
-        <div class="currency-value">
-          <p *ngIf="r.key === 'value'">
-            {{ r.value | currency:'USD':'symbol-narrow':'1.2-2' }}
+        <div class="value-wrapper">
+          <p>
+            {{ value | currency:name:'symbol-narrow':'1.2-2' }}
           </p>
         </div>
 
-      </div>
     </div>
 </div>

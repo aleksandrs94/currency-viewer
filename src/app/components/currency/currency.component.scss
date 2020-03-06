@@ -1,26 +1,26 @@
 $pri: #E5E6F1;
 $sec: #dade0d;
 
-.currency-value, .currency-name {
+.value-wrapper, .name-wrapper{
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.currency-value {
+.value-wrapper {
   align-self: end;
   p {
-    font-size: 60px;
+    font-size: 30px;
     color: $pri;
     transform: translateY(0px);
     transition: all 0.6s;
   }
 }
 
-.currency-name {
+.name-wrapper{
   align-self: start;
   p {
-    font-size: 30px;
+    font-size: 60px;
     font-weight: bold;
     letter-spacing: 2px;
     color: $pri;
@@ -32,12 +32,12 @@ $sec: #dade0d;
 .item {
   transition: all 0.5s;
   &:hover {
-    & .currency-name p {
-      transform: translateY(-10px);
+    & .name-wrapper p {
+      transform: translateY(40px);
       color: $sec;
     }
-    & .currency-value p {
-      transform: translateY(5px);
+    & .value-wrapper p {
+      transform: translateY(-40px);
       color: $sec;
     }
   }

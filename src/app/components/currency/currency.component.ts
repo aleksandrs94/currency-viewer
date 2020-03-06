@@ -6,7 +6,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./currency.component.scss']
 })
 export class CurrencyComponent implements OnInit {
-  @Input() rate: any[];
+  @Input() name: string;
+  @Input() value: number;
 
   constructor() { }
 

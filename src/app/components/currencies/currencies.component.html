@@ -1,17 +1,29 @@
 <div>
-  <input [value]="date" [(ngModel)]="date" (change)="changeDate(date)" />
-  <select [(ngModel)]="base" (change)="changeBase(base)">
-    <option *ngFor="let option of baseDropDown">
-      {{ option }}
-    </option>
-  </select>
+
+  <div class="input-wrapper">
+    <label>Choose Date:
+      <input [value]="date" [(ngModel)]="date" (change)="changeDate(date)" />
+    </label>
+  </div>
+
+  <div class="dropdown-wrapper">
+    <label>Choose Currency:
+      <select id="currency" [(ngModel)]="base" (change)="changeBase(base)">
+        <option *ngFor="let option of baseDropDown">
+          {{ option }}
+        </option>
+      </select>
+    </label>
+  </div>
 
   <div class="container">
     <app-currency
       *ngFor="let rate of rates | keyvalue"
-      [rate]="rate"
+      [name]="rate.key"
+      [value]="rate.value"
       class="items"
     >
     </app-currency>
   </div>
+
 </div>
