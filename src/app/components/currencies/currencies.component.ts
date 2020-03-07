@@ -11,12 +11,15 @@ export class CurrenciesComponent implements OnInit {
   base: any;
   date: any;
   baseDropDown: Array<string>;
+  errShow: boolean;
+  errorText: string;
 
   constructor(private currencyService: CurrencyService) { }
 
   ngOnInit(): void {
 
     this.currencyService.getCurrencies().subscribe(data => {
+      this.errShow = false;
       this.baseDropDown = [];
       for (const key in data) {
         if (key === 'rates') {
@@ -38,6 +41,9 @@ export class CurrenciesComponent implements OnInit {
           this.base = data[key];
         }
       }
+    }, error => {
+      this.errShow = true;
+      this.errorText = error;
     });
   }
 
@@ -61,6 +67,7 @@ export class CurrenciesComponent implements OnInit {
 
   changeBaseOrDate(currencies) {
     this.currencyService.getDifferent(currencies).subscribe(data => {
+      this.errShow = false;
       this.baseDropDown = [];
       for (const key in data) {
         if (key === 'rates') {
@@ -82,6 +89,9 @@ export class CurrenciesComponent implements OnInit {
           this.base = data[key];
         }
       }
+    }, error => {
+      this.errShow = true;
+      this.errorText = error;
     });
   }
 

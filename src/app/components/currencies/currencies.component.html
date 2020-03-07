@@ -18,6 +18,14 @@
     </div>
   </section>
 
+  <div *ngIf="errShow; then errorBlock else currencyBlock"></div>
+
+  <ng-template #errorBlock>
+    <app-error [message]="errorText">
+    </app-error>
+  </ng-template>
+
+  <ng-template #currencyBlock>
   <div class="container">
     <app-currency
       *ngFor="let rate of rates | keyvalue"
@@ -27,5 +35,6 @@
     >
     </app-currency>
   </div>
+  </ng-template>
 
 </div>

@@ -10,6 +10,7 @@ import { CurrenciesComponent } from './components/currencies/currencies.componen
 import { CurrencyComponent } from './components/currency/currency.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CurrencyService } from './services/currency.service';
+import { ErrorComponent } from './components/error/error.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { CurrencyService } from './services/currency.service';
     AppComponent,
     CurrenciesComponent,
     CurrencyComponent,
-    FooterComponent
+    FooterComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
