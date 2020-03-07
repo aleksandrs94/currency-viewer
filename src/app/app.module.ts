@@ -8,13 +8,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CurrenciesComponent } from './components/currencies/currencies.component';
 import { CurrencyComponent } from './components/currency/currency.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { CurrencyService } from './services/currency.service';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     CurrenciesComponent,
-    CurrencyComponent
+    CurrencyComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
