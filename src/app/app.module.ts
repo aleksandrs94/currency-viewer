@@ -7,19 +7,21 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CurrenciesComponent } from './components/currencies/currencies.component';
-import { CurrencyComponent } from './components/currency/currency.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CurrencyService } from './services/currency.service';
 import { ErrorComponent } from './components/error/error.component';
+import { CurrencyDetailComponent } from './components/currency-detail/currency-detail.component';
+import { HeaderComponent } from './components/header/header.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CurrenciesComponent,
-    CurrencyComponent,
     FooterComponent,
-    ErrorComponent
+    ErrorComponent,
+    CurrencyDetailComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

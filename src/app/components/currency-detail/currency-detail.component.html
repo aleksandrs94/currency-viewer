@@ -1,0 +1,44 @@
+<div>
+  <section class="row">
+    <div class="input-wrapper">
+      <label>Start At:
+        <input maxlength='10' [value]="startAt" [(ngModel)]="startAt" (change)="changeParam(startAt, endAt, base)" />
+      </label>
+      <label>End At:
+        <input maxlength='10' [value]="endAt" [(ngModel)]="endAt" (change)="changeParam(startAt, endAt, base)" />
+      </label>
+    </div>
+
+    <div class="dropdown-wrapper">
+      <label>Base Currency:
+        <input [value]="base" [(ngModel)]="base" (change)="changeParam(startAt, endAt, base)" />
+      </label>
+    </div>
+  </section>
+
+  <h1 class="text-center">{{ name }}</h1>
+
+  <div *ngIf="errShow; then errorBlock else historyBlock"></div>
+
+  <ng-template #errorBlock>
+    <app-error [message]="errorText">
+    </app-error>
+  </ng-template>
+
+  <ng-template #historyBlock>
+    <table class="container">
+      <thead>
+        <th>Date</th>
+        <th>Value</th>
+      </thead>
+        <tbody>
+        <tr *ngFor="let rate of rates | keyvalue">
+        <td>{{ rate.key | date:'mediumDate' }}</td>
+        <td *ngFor="let r of rate.value | keyvalue">
+          {{ r.value | currency:r.key:'symbol-narrow':'1.2-2' }}
+        </td>
+      </tbody>
+    </table>
+  </ng-template>
+
+</div>

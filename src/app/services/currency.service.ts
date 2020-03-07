@@ -5,6 +5,7 @@ import { throwError, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { Currency } from '../models/Currency';
+import { History } from '../models/History';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,7 +21,7 @@ export class CurrencyService {
 
   constructor(private http: HttpClient) { }
 
-  // Get Currencies
+  // Get default Currencies
   getCurrencies(): Observable<Currency[]> {
     return this.http.get<Currency[]>(
       `${this.currenciesUrl}/latest`
@@ -28,24 +29,26 @@ export class CurrencyService {
     .pipe(catchError(this.errorHandler));
   }
 
-  // getDifferentBase(base: string): Observable<Currency[]> {
-  //   return this.http.get<Currency[]>(
-  //     `${this.currenciesUrl}/latest?base=${base}`
-  //   )
-  //   .pipe(catchError(this.errorHandler));
-  // }
-
-  // getDifferentDate(date: string): Observable<Currency[]> {
-  //   return this.http.get<Currency[]>(
-  //     `${this.currenciesUrl}/${date}`
-  //   )
-  //   .pipe(catchError(this.errorHandler));
-  // }
-
   // Get values with different base currency or different date
   getDifferent(currencies: Currency): Observable<Currency[]> {
     return this.http.get<Currency[]>(
       `${this.currenciesUrl}/${currencies.date}?base=${currencies.base}`
+    )
+    .pipe(catchError(this.errorHandler));
+  }
+
+  // Get default History
+  getHistory(curr: string): Observable<History[]> {
+    return this.http.get<History[]>(
+      `${this.currenciesUrl}/history?start_at=${'2019-01-01'}&end_at=${'2020-01-01'}&symbols=${curr}&base=${'EUR'}`
+    )
+    .pipe(catchError(this.errorHandler));
+  }
+
+  // Get historical values for particular period, currency and base currency
+  getHistoryDifferent(history: History): Observable<History[]> {
+    return this.http.get<History[]>(
+      `${this.currenciesUrl}/history?start_at=${history.start_at}&end_at=${history.end_at}&symbols=${history.base}&base=${history.base}`
     )
     .pipe(catchError(this.errorHandler));
   }

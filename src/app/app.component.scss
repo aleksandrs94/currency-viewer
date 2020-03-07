@@ -1,0 +1,11 @@
+@import 'src/mixins';
+
+.container {
+  margin: 30px auto;
+  @include lg {
+    width: 900px;
+  }
+  @include xl {
+    width: 1200px;
+  }
+}

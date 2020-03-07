@@ -26,15 +26,30 @@
   </ng-template>
 
   <ng-template #currencyBlock>
-  <div class="container">
-    <app-currency
-      *ngFor="let rate of rates | keyvalue"
-      [name]="rate.key"
-      [value]="rate.value"
-      class="items"
-    >
-    </app-currency>
-  </div>
+    <div class="container">
+      <div
+        *ngFor="let rate of rates | keyvalue"
+        class="items"
+      >
+      <a
+        *ngIf="rate.key && rate.value"
+        [routerLink]="['/currency', rate.key]"
+        class="item"
+      >
+        <div class="name-wrapper">
+          <p>
+            {{ rate.key }}
+          </p>
+        </div>
+
+        <div class="value-wrapper">
+          <p>
+            {{ rate.value | currency:rate.key:'symbol-narrow':'1.2-2' }}
+          </p>
+        </div>
+      </a>
+    </div>
+    </div>
   </ng-template>
 
 </div>
