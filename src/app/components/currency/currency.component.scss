@@ -1,5 +1,4 @@
-$pri: #E5E6F1;
-$sec: #dade0d;
+@import '../../../_colors.scss';
 
 .value-wrapper, .name-wrapper{
   display: flex;
@@ -11,7 +10,6 @@ $sec: #dade0d;
   align-self: end;
   p {
     font-size: 30px;
-    color: $pri;
     transform: translateY(0px);
     transition: all 0.6s;
   }
@@ -23,7 +21,6 @@ $sec: #dade0d;
     font-size: 60px;
     font-weight: bold;
     letter-spacing: 2px;
-    color: $pri;
     transform: translateY(0px);
     transition: all 0.5s;
   }

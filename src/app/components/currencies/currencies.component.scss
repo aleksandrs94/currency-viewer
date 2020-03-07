@@ -1,26 +1,99 @@
-$pri: #243447;
-$sec: #dade0d;
-$trd: #E5E6F1;
+@import '../../../_colors.scss';
+@import '../../../mixins';
 
 .container {
-  width: 800px;
-  margin: auto;
+  width: 100%;
+  margin: 30px auto;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
   grid-template-rows: 1fr;
-  grid-gap: 15px;
+  grid-gap: 10px;
+  @include lg {
+    width: 900px;
+  }
+  @include xl {
+    width: 1200px;
+  }
 }
 
 .items {
-  background: $pri;
+  background: $trd;
   border-radius: 15px;
   grid-template-rows: 2fr 1fr;
   grid-gap: 10px;
   cursor: pointer;
-  border: 3px solid $trd;
+  border: 3px solid $pri;
   transition: all 0.6s;
-  &:hover {
+  &:hover  {
     border: 3px dotted $sec;
+  }
+}
+
+.input-wrapper {
+  $char-w: 1ch;
+  $gap: .5*$char-w;
+  $n-char: 10;
+  $in-w: $n-char*($char-w + $gap);
+
+  input {
+    display: block;
+    border: none;
+    padding: 0;
+    color: $pri;
+    width: $in-w;
+    background: repeating-linear-gradient(90deg,
+      dimgrey 0, dimgrey $char-w,
+      transparent 0, transparent $char-w + $gap)
+      0 100%/ #{$in-w - $gap} 2px no-repeat;
+    font: 3ch roboto sans mono, consolas, monospace;
+    letter-spacing: $gap;
+
+    &:focus {
+      outline: none;
+      color: $sec;
+    }
+  }
+}
+
+.dropdown-wrapper {
+  $char-w: 1ch;
+  $gap: .5*$char-w;
+  $n-char: 3;
+  $in-w: $n-char*($char-w + $gap);
+
+  select {
+    display: block;
+    border: none;
+    padding: 0;
+    color: $pri;
+    width: 1.5+$in-w;
+    background: repeating-linear-gradient(90deg,
+      dimgrey 0, dimgrey $char-w,
+      transparent 0, transparent $char-w + $gap)
+      0 100%/ #{$in-w - $gap} 2px no-repeat;
+    font: 3ch roboto sans mono, consolas, monospace;
+    letter-spacing: $gap;
+
+    &:focus {
+      outline: none;
+      color: $sec;
+    }
+  }
+}
+
+.row {
+  width: 100%;
+  margin: auto;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  grid-template-rows: 1fr;
+  grid-gap: 15px;
+  @include lg {
+    width: 900px;
+  }
+  @include xl {
+    width: 1200px;
   }
 }
