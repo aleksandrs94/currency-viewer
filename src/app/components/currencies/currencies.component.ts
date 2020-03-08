@@ -47,25 +47,16 @@ export class CurrenciesComponent implements OnInit {
     });
   }
 
-  changeBase(base) {
+  changeParams(date, base) {
     const currencies = {
-      date: this.date,
+      date,
       base,
       rates: this.rates
     };
-    this.changeBaseOrDate(currencies);
+    this.getWithParams(currencies);
   }
 
-  changeDate(date) {
-    const currencies = {
-      date,
-      base: this.base,
-      rates: this.rates
-    };
-    this.changeBaseOrDate(currencies);
-  }
-
-  changeBaseOrDate(currencies) {
+  getWithParams(currencies) {
     this.currencyService.getDifferent(currencies).subscribe(data => {
       this.errShow = false;
       this.baseDropDown = [];
