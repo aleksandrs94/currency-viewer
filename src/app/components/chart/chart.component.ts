@@ -10,15 +10,11 @@ import { Color, Label } from 'ng2-charts';
 export class ChartComponent implements OnInit {
   @Input() public lineChartData: ChartDataSets[];
   @Input() public lineChartLabels: Label[];
+  @Input() private positive: boolean;
   public lineChartOptions: (ChartOptions & { responsive: any }) = {
     responsive: true,
   };
-  public lineChartColors: Color[] = [
-    {
-      borderColor: 'black',
-      backgroundColor: 'rgba(255,0,0,0.3)',
-    },
-  ];
+  public lineChartColors: Color[];
   public lineChartLegend = false;
   public lineChartType = 'line';
   public lineChartPlugins = [];
@@ -26,6 +22,12 @@ export class ChartComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.lineChartColors = [
+      {
+        borderColor: 'black',
+        backgroundColor: this.positive ? 'rgba(218,222,13,0.5)' : 'rgba(255,0,0,0.3)',
+      },
+    ]
   }
 
 }

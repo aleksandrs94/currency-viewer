@@ -19,6 +19,7 @@ export class CurrencyDetailComponent implements OnInit {
   errorText: string;
   lineChartLabels: Array<string>;
   lineChartData: Array<object>;
+  positive: boolean;
 
   constructor(private route: ActivatedRoute, private currencyService: CurrencyService, private router: Router) { }
 
@@ -86,5 +87,6 @@ export class CurrencyDetailComponent implements OnInit {
     }
     this.lineChartLabels = labels;
     this.lineChartData = [{ data: values, label: this.name }];
+    this.positive = values[0] < values[values.length-1];
   }
 }

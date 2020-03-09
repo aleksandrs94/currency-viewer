@@ -31,6 +31,7 @@
       *ngIf="lineChartLabels && lineChartData"
       [lineChartLabels]="lineChartLabels"
       [lineChartData]="lineChartData"
+      [positive]="positive"
     ></app-chart>
 
     <h1 class="text-center">{{ name }}</h1>
@@ -45,7 +46,7 @@
         <tr *ngFor="let rate of rates | keyvalue">
         <td>{{ rate.key | date:'mediumDate' }}</td>
         <td *ngFor="let r of rate.value | keyvalue">
-          {{ r.value | currency:r.key:'symbol-narrow':'1.2-2' }}
+          {{ r.value | number:'1.4-4' }}
         </td>
       </tbody>
     </table>
