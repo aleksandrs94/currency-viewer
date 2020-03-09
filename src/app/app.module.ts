@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +13,7 @@ import { CurrencyService } from './services/currency.service';
 import { ErrorComponent } from './components/error/error.component';
 import { CurrencyDetailComponent } from './components/currency-detail/currency-detail.component';
 import { HeaderComponent } from './components/header/header.component';
+import { ChartComponent } from './components/chart/chart.component';
 
 
 @NgModule({
@@ -21,14 +23,16 @@ import { HeaderComponent } from './components/header/header.component';
     FooterComponent,
     ErrorComponent,
     CurrencyDetailComponent,
-    HeaderComponent
+    HeaderComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChartsModule
   ],
   providers: [CurrencyService],
   bootstrap: [AppComponent]
