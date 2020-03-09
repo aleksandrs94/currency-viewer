@@ -1,8 +1,14 @@
 <section class="error-block">
   <img src="assets/alert-octagon.svg" alt="Error icon" style="width:100px;height:100px;" />
   <p>Error!</p>
-  <span>
+
+  <div class="block">
+    Reason:<br>
+    {{ reason }}
+  </div>
+  <div class="block">
     Message:<br>
-    {{ message }}
-  </span>
+    {{ msg }}
+  </div>
+
 </section>
