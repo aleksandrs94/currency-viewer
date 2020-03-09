@@ -10,7 +10,21 @@ import { Color, Label } from 'ng2-charts';
 export class ChartComponent implements OnInit {
   @Input() public lineChartData: ChartDataSets[];
   @Input() public lineChartLabels: Label[];
-  @Input() private positive: boolean;
+  private positiveP = false;
+
+  @Input()
+  set positive(positive: boolean) {
+    this.positiveP = positive;
+    this.lineChartColors = [
+      {
+        borderColor: 'black',
+        backgroundColor: this.positiveP ? 'rgba(218,222,13,0.5)' : 'rgba(255,0,0,0.3)',
+      },
+    ];
+  }
+
+  get positive(): boolean { return this.positiveP; }
+
   public lineChartOptions: (ChartOptions & { responsive: any }) = {
     responsive: true,
   };
@@ -22,12 +36,6 @@ export class ChartComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.lineChartColors = [
-      {
-        borderColor: 'black',
-        backgroundColor: this.positive ? 'rgba(218,222,13,0.5)' : 'rgba(255,0,0,0.3)',
-      },
-    ]
   }
 
 }

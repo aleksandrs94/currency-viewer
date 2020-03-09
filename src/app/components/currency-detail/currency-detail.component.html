@@ -1,20 +1,12 @@
 <div>
-  <section class="row">
-    <div class="input-wrapper">
-      <label>Start At:
-        <input maxlength='10' [value]="startAt" [(ngModel)]="startAt" (change)="changeParam(startAt, endAt, base)" />
-      </label>
-      <label>End At:
-        <input maxlength='10' [value]="endAt" [(ngModel)]="endAt" (change)="changeParam(startAt, endAt, base)" />
-      </label>
-    </div>
-
-    <div class="dropdown-wrapper">
-      <label>Base Currency:
-        <input [value]="base" [(ngModel)]="base" (change)="changeParam(startAt, endAt, base)" />
-      </label>
-    </div>
-  </section>
+  <app-header
+    [base]="base"
+    [startAt]="startAt"
+    [endAt]="endAt"
+    [baseDropDown]="baseDropDown"
+    (changedParams)="getWithParams($event)"
+    (changedPeriodParams)="getWithParams($event)"
+  ></app-header>
 
   <div *ngIf="errShow; then errorBlock else historyBlock"></div>
 

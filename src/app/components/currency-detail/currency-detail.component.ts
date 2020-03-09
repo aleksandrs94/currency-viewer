@@ -13,6 +13,7 @@ export class CurrencyDetailComponent implements OnInit {
   name: string;
   rates: any;
   base: any;
+  baseDropDown: Array<string>;
   startAt: any;
   endAt: any;
   errShow: boolean;
@@ -20,6 +21,7 @@ export class CurrencyDetailComponent implements OnInit {
   lineChartLabels: Array<string>;
   lineChartData: Array<object>;
   positive: boolean;
+  loading: boolean;
 
   constructor(private route: ActivatedRoute, private currencyService: CurrencyService, private router: Router) { }
 
@@ -31,6 +33,7 @@ export class CurrencyDetailComponent implements OnInit {
       })
     );
 
+    this.baseDropDown = history.state.data;
     this.name = this.router.url.split('/').pop();
 
     this.currencyService.getHistory(this.name).subscribe(data => {
@@ -54,31 +57,68 @@ export class CurrencyDetailComponent implements OnInit {
     });
   }
 
-  changeParam(start, end, base) {
+  getWithParams(params: object): void {
+    this.loading = true;
+    let startAt: string;
+    let endAt: string;
+    let base: string;
+    for (const key in params) {
+      if (key === 'startAt') {
+        startAt = params[key];
+      } else if (key === 'endAt') {
+        endAt = params[key];
+      } else if (key === 'base') {
+        base = params[key];
+      }
+    }
     const currencies = {
-      start_at: start,
-      end_at: end,
+      start_at: startAt,
+      end_at: endAt,
       base,
+      name: this.name
     };
-    console.log(currencies);
+    this.fetchWithParams(currencies);
+  }
+
+  fetchWithParams(currencies: object): void {
+    this.currencyService.getHistoryDifferent(currencies).subscribe(data => {
+      this.errShow = false;
+      for (const key in data) {
+        if (key === 'rates') {
+          this.rates = data[key];
+        } else if (key === 'start_at') {
+          this.startAt = data[key];
+        } else if (key === 'end_at') {
+          this.endAt = data[key];
+        } else if (key === 'base') {
+          this.base = data[key];
+        }
+      }
+      this.loading = false;
+    }, error => {
+      this.errShow = true;
+      this.errorText = error;
+    }, () => {
+      this.getChartDatas();
+    });
   }
 
   getChartDatas() {
-    let coppyObject = Object.assign({}, this.rates);
+    const coppyObject = Object.assign({}, this.rates);
     // Getting the keys of JavaScript Object
-    let sortedObject = Object.keys(coppyObject)
-    .sort().reduce(function(Obj, key) {  
-        // Adding the key-value pair to the new object in sorted keys manner 
-        Obj[key] = coppyObject[key];  
-        return Obj;  
+    const sortedObject = Object.keys(coppyObject)
+    .sort().reduce((Obj, k) => {
+        // Adding the key-value pair to the new object in sorted keys manner
+        Obj[k] = coppyObject[k];
+        return Obj;
     }, {});
 
     // Loop through sorted object
     const len = Object.keys(sortedObject).length;
     let key: string;
-    let labels = [];
-    let values = [];
-    for (let i=0; i<len; i++) {
+    const labels = [];
+    const values = [];
+    for (let i = 0; i < len; i++) {
       // if (i & 2) { // Push values for even iterations only - better chart readability
         key = Object.keys(sortedObject)[i];
         labels.push(key);
@@ -87,6 +127,6 @@ export class CurrencyDetailComponent implements OnInit {
     }
     this.lineChartLabels = labels;
     this.lineChartData = [{ data: values, label: this.name }];
-    this.positive = values[0] < values[values.length-1];
+    this.positive = values[0] < values[values.length - 1];
   }
 }
