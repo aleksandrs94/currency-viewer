@@ -27,7 +27,7 @@
       <a
         *ngIf="rate.key && rate.value"
         [routerLink]="['/currency', rate.key]"
-        [state]="{ data: baseDropDown }"
+        [state]="{ base: base, baseDropDown: baseDropDown, date: date }"
         class="item"
       >
         <div class="name-wrapper">

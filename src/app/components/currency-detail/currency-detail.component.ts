@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class CurrencyDetailComponent implements OnInit {
   name: string;
+  date: any;
   rates: any;
   base: any;
   baseDropDown: Array<string>;
@@ -21,7 +22,6 @@ export class CurrencyDetailComponent implements OnInit {
   lineChartLabels: Array<string>;
   lineChartData: Array<object>;
   positive: boolean;
-  loading: boolean;
 
   constructor(private route: ActivatedRoute, private currencyService: CurrencyService, private router: Router) { }
 
@@ -33,32 +33,25 @@ export class CurrencyDetailComponent implements OnInit {
       })
     );
 
-    this.baseDropDown = history.state.data;
+    this.base = history.state.base || 'EUR';
+    this.baseDropDown = history.state.baseDropDown;
+    this.date = history.state.date || this.formatDate(new Date());
     this.name = this.router.url.split('/').pop();
 
-    this.currencyService.getHistory(this.name).subscribe(data => {
-      this.errShow = false;
-      for (const key in data) {
-        if (key === 'rates') {
-          this.rates = data[key];
-        } else if (key === 'start_at') {
-          this.startAt = data[key];
-        } else if (key === 'end_at') {
-          this.endAt = data[key];
-        } else if (key === 'base') {
-          this.base = data[key];
-        }
-      }
-    }, error => {
-      this.errShow = true;
-      this.errorText = error;
-    }, () => {
-      this.getChartDatas();
-    });
+    const d = new Date(this.date);
+    d.setMonth(d.getMonth() - 12);
+
+    const currencies = {
+      start_at: this.formatDate(d),
+      end_at: this.date,
+      base: this.base,
+      name: this.name
+    };
+
+    this.fetchWithParams(currencies);
   }
 
   getWithParams(params: object): void {
-    this.loading = true;
     let startAt: string;
     let endAt: string;
     let base: string;
@@ -81,7 +74,7 @@ export class CurrencyDetailComponent implements OnInit {
   }
 
   fetchWithParams(currencies: object): void {
-    this.currencyService.getHistoryDifferent(currencies).subscribe(data => {
+    this.currencyService.getHistory(currencies).subscribe(data => {
       this.errShow = false;
       for (const key in data) {
         if (key === 'rates') {
@@ -94,13 +87,26 @@ export class CurrencyDetailComponent implements OnInit {
           this.base = data[key];
         }
       }
-      this.loading = false;
     }, error => {
       this.errShow = true;
       this.errorText = error;
     }, () => {
       this.getChartDatas();
     });
+  }
+
+  formatDate(date: Date | string) {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+    if (month.length < 2) {
+        month = '0' + month;
+    }
+    if (day.length < 2) {
+        day = '0' + day;
+    }
+    return [year, month, day].join('-');
   }
 
   getChartDatas() {

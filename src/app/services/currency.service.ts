@@ -21,32 +21,16 @@ export class CurrencyService {
 
   constructor(private http: HttpClient) { }
 
-  // Get default Currencies
-  getCurrencies(): Observable<Currency[]> {
-    return this.http.get<Currency[]>(
-      `${this.currenciesUrl}/latest`
-    )
-    .pipe(catchError(this.errorHandler));
-  }
-
   // Get values with different base currency or different date
-  getDifferent(currencies: Currency): Observable<Currency[]> {
+  getCurrencies(currencies: Currency): Observable<Currency[]> {
     return this.http.get<Currency[]>(
       `${this.currenciesUrl}/${currencies.date}?base=${currencies.base}`
     )
     .pipe(catchError(this.errorHandler));
   }
 
-  // Get default History
-  getHistory(name: string): Observable<History[]> {
-    return this.http.get<History[]>(
-      `${this.currenciesUrl}/history?start_at=${'2019-01-01'}&end_at=${'2020-01-01'}&symbols=${name}&base=${'EUR'}`
-    )
-    .pipe(catchError(this.errorHandler));
-  }
-
   // Get historical values for particular period, currency and base currency
-  getHistoryDifferent(history: any): Observable<History[]> {
+  getHistory(history: any): Observable<History[]> {
     return this.http.get<History[]>(
       `${this.currenciesUrl}/history?start_at=${history.start_at}&end_at=${history.end_at}&symbols=${history.name}&base=${history.base}`
     )
