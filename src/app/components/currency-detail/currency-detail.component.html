@@ -16,6 +16,12 @@
     </div>
   </section>
 
+  <app-chart
+    *ngIf="lineChartLabels && lineChartData"
+    [lineChartLabels]="lineChartLabels"
+    [lineChartData]="lineChartData"
+  ></app-chart>
+
   <h1 class="text-center">{{ name }}</h1>
 
   <div *ngIf="errShow; then errorBlock else historyBlock"></div>

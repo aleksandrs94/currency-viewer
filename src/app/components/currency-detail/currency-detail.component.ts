@@ -17,6 +17,8 @@ export class CurrencyDetailComponent implements OnInit {
   endAt: any;
   errShow: boolean;
   errorText: string;
+  lineChartLabels: Array<string>;
+  lineChartData: Array<object>;
 
   constructor(private route: ActivatedRoute, private currencyService: CurrencyService, private router: Router) { }
 
@@ -46,6 +48,8 @@ export class CurrencyDetailComponent implements OnInit {
     }, error => {
       this.errShow = true;
       this.errorText = error;
+    }, () => {
+      this.getChartDatas();
     });
   }
 
@@ -58,4 +62,29 @@ export class CurrencyDetailComponent implements OnInit {
     console.log(currencies);
   }
 
+  getChartDatas() {
+    let coppyObject = Object.assign({}, this.rates);
+    // Getting the keys of JavaScript Object
+    let sortedObject = Object.keys(coppyObject)
+    .sort().reduce(function(Obj, key) {  
+        // Adding the key-value pair to the new object in sorted keys manner 
+        Obj[key] = coppyObject[key];  
+        return Obj;  
+    }, {});
+
+    // Loop through sorted object
+    const len = Object.keys(sortedObject).length;
+    let key: string;
+    let labels = [];
+    let values = [];
+    for (let i=0; i<len; i++) {
+      if (i & 2) { // Push values for even iterations only - better chart readability
+        key = Object.keys(sortedObject)[i];
+        labels.push(key);
+        values.push(Object.values(sortedObject[key]).pop());
+      }
+    }
+    this.lineChartLabels = labels;
+    this.lineChartData = [{ data: values, label: this.name }];
+  }
 }
