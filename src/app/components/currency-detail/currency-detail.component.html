@@ -16,14 +16,6 @@
     </div>
   </section>
 
-  <app-chart
-    *ngIf="lineChartLabels && lineChartData"
-    [lineChartLabels]="lineChartLabels"
-    [lineChartData]="lineChartData"
-  ></app-chart>
-
-  <h1 class="text-center">{{ name }}</h1>
-
   <div *ngIf="errShow; then errorBlock else historyBlock"></div>
 
   <ng-template #errorBlock>
@@ -32,6 +24,18 @@
   </ng-template>
 
   <ng-template #historyBlock>
+    <h1 class="text-center">{{ name }}</h1>
+    <h3 class="text-center">Historical Values In Line Chart</h3>
+
+    <app-chart
+      *ngIf="lineChartLabels && lineChartData"
+      [lineChartLabels]="lineChartLabels"
+      [lineChartData]="lineChartData"
+    ></app-chart>
+
+    <h1 class="text-center">{{ name }}</h1>
+    <h3 class="text-center">Historical Values In Table</h3>
+
     <table class="container">
       <thead>
         <th>Date</th>

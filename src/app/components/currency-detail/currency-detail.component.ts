@@ -78,11 +78,11 @@ export class CurrencyDetailComponent implements OnInit {
     let labels = [];
     let values = [];
     for (let i=0; i<len; i++) {
-      if (i & 2) { // Push values for even iterations only - better chart readability
+      // if (i & 2) { // Push values for even iterations only - better chart readability
         key = Object.keys(sortedObject)[i];
         labels.push(key);
         values.push(Object.values(sortedObject[key]).pop());
-      }
+      // }
     }
     this.lineChartLabels = labels;
     this.lineChartData = [{ data: values, label: this.name }];

@@ -19,7 +19,7 @@ export class ChartComponent implements OnInit {
       backgroundColor: 'rgba(255,0,0,0.3)',
     },
   ];
-  public lineChartLegend = true;
+  public lineChartLegend = false;
   public lineChartType = 'line';
   public lineChartPlugins = [];
 
