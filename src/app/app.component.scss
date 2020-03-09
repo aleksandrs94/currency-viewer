@@ -1,7 +1,8 @@
 @import 'src/mixins';
 
 .container {
-  margin: 30px auto;
+  margin: auto;
+  width: 100%;
   @include lg {
     width: 900px;
   }

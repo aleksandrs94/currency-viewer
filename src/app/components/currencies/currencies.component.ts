@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrencyService } from 'src/app/services/currency.service';
-
+import { Currency } from 'src/app/models/Currency';
 @Component({
   selector: 'app-currencies',
   templateUrl: './currencies.component.html',
@@ -13,6 +13,7 @@ export class CurrenciesComponent implements OnInit {
   baseDropDown: Array<string>;
   errShow: boolean;
   errorText: string;
+  loading: boolean;
 
   constructor(private currencyService: CurrencyService) { }
 
@@ -23,12 +24,8 @@ export class CurrenciesComponent implements OnInit {
       this.baseDropDown = [];
       for (const key in data) {
         if (key === 'rates') {
-          for (const curr in data[key]) {
-            if (data[key].hasOwnProperty(curr)) {
-              this.rates = data[key];
-              this.baseDropDown.push(curr);
-            }
-          }
+          this.rates = data[key];
+          this.baseDropDown = Object.keys(data[key]);
           if (!this.baseDropDown.includes(this.base)) {
             this.baseDropDown.push(this.base || 'EUR');
           }
@@ -47,27 +44,33 @@ export class CurrenciesComponent implements OnInit {
     });
   }
 
-  changeParams(date, base) {
+  getWithParams(params: object): void {
+    this.loading = true;
+    let date: string;
+    let base: string;
+    for (const key in params) {
+      if (key === 'date') {
+        date = params[key];
+      } else if (key === 'base') {
+        base = params[key];
+      }
+    }
     const currencies = {
       date,
       base,
       rates: this.rates
     };
-    this.getWithParams(currencies);
+    this.fetchWithParams(currencies);
   }
 
-  getWithParams(currencies) {
+  fetchWithParams(currencies: Currency): void {
     this.currencyService.getDifferent(currencies).subscribe(data => {
       this.errShow = false;
       this.baseDropDown = [];
       for (const key in data) {
         if (key === 'rates') {
-          for (const curr in data[key]) {
-            if (data[key].hasOwnProperty(curr)) {
-              this.rates = data[key];
-              this.baseDropDown.push(curr);
-            }
-          }
+          this.rates = data[key];
+          this.baseDropDown = Object.keys(data[key]);
           if (!this.baseDropDown.includes(this.base)) {
             this.baseDropDown.push(this.base || 'EUR');
           }
@@ -80,6 +83,7 @@ export class CurrenciesComponent implements OnInit {
           this.base = data[key];
         }
       }
+      this.loading = false;
     }, error => {
       this.errShow = true;
       this.errorText = error;

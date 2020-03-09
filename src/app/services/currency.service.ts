@@ -38,17 +38,17 @@ export class CurrencyService {
   }
 
   // Get default History
-  getHistory(curr: string): Observable<History[]> {
+  getHistory(name: string): Observable<History[]> {
     return this.http.get<History[]>(
-      `${this.currenciesUrl}/history?start_at=${'2019-01-01'}&end_at=${'2020-01-01'}&symbols=${curr}&base=${'EUR'}`
+      `${this.currenciesUrl}/history?start_at=${'2019-01-01'}&end_at=${'2020-01-01'}&symbols=${name}&base=${'EUR'}`
     )
     .pipe(catchError(this.errorHandler));
   }
 
   // Get historical values for particular period, currency and base currency
-  getHistoryDifferent(history: History): Observable<History[]> {
+  getHistoryDifferent(history: any): Observable<History[]> {
     return this.http.get<History[]>(
-      `${this.currenciesUrl}/history?start_at=${history.start_at}&end_at=${history.end_at}&symbols=${history.base}&base=${history.base}`
+      `${this.currenciesUrl}/history?start_at=${history.start_at}&end_at=${history.end_at}&symbols=${history.name}&base=${history.base}`
     )
     .pipe(catchError(this.errorHandler));
   }
