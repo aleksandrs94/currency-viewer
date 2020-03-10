@@ -4,7 +4,7 @@
   <ng-template #dateBlock>
     <div class="input-wrapper">
       <label>Date:
-        <input maxlength='10' [value]="date" [(ngModel)]="date" (change)="changeParams(date, base)" />
+        <input maxlength='10' [(ngModel)]="date" (change)="changeParams(date, base)" />
       </label>
     </div>
   </ng-template>
@@ -12,10 +12,10 @@
   <ng-template #periodBlock>
     <div class="input-wrapper">
       <label>Start At:
-        <input maxlength='10' [value]="startAt" [(ngModel)]="startAt" (change)="changePeriodParams(startAt, endAt, base)" />
+        <input maxlength='10' [(ngModel)]="startAt" (change)="changePeriodParams(startAt, endAt, base)" />
       </label>
       <label>End At:
-        <input maxlength='10' [value]="endAt" [(ngModel)]="endAt" (change)="changePeriodParams(startAt, endAt, base)" />
+        <input maxlength='10' [(ngModel)]="endAt" (change)="changePeriodParams(startAt, endAt, base)" />
       </label>
     </div>
   </ng-template>

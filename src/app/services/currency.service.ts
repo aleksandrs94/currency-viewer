@@ -1,17 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { throwError, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { Currency } from '../models/Currency';
 import { History } from '../models/History';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +31,6 @@ export class CurrencyService {
   }
 
   errorHandler(error: HttpErrorResponse) {
-    return throwError(error.error.error || error.message || 'Server error');
+    return throwError({ reason: (error.error.error || 'Reason'), message: (error.message || 'Server error')});
   }
 }

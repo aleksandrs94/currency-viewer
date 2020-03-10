@@ -4,8 +4,6 @@
     [base]="base"
     [date]="date"
     [baseDropDown]="baseDropDown"
-    (changedParams)="getWithParams($event)"
-    (changedPeriodParams)="getWithParams($event)"
   ></app-header>
 
   <div *ngIf="errShow; then errorBlock else currencyBlock"></div>
@@ -16,10 +14,7 @@
   </ng-template>
 
   <ng-template #currencyBlock>
-    <div
-      *ngIf="!loading"
-      class="container"
-    >
+    <div class="container">
       <div
         *ngFor="let rate of rates | keyvalue"
         class="items"

@@ -4,8 +4,6 @@
     [startAt]="startAt"
     [endAt]="endAt"
     [baseDropDown]="baseDropDown"
-    (changedParams)="getWithParams($event)"
-    (changedPeriodParams)="getWithParams($event)"
   ></app-header>
 
   <div *ngIf="errShow; then errorBlock else historyBlock"></div>

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../app.state';
+import { History } from '../../models/History';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { CurrencyService } from 'src/app/services/currency.service';
@@ -10,11 +14,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./currency-detail.component.scss']
 })
 export class CurrencyDetailComponent implements OnInit {
+  history: Observable<History[]>;
   name: string;
-  date: any;
   rates: any;
   base: any;
-  baseDropDown: Array<string>;
+  baseDropDown: any;
   startAt: any;
   endAt: any;
   errShow: boolean;
@@ -23,7 +27,17 @@ export class CurrencyDetailComponent implements OnInit {
   lineChartData: Array<object>;
   positive: boolean;
 
-  constructor(private route: ActivatedRoute, private currencyService: CurrencyService, private router: Router) { }
+  constructor(
+    private store: Store<AppState>,
+    private route: ActivatedRoute,
+    private currencyService: CurrencyService,
+    private router: Router
+  ) {
+    this.history = store.select('history');
+    store.select('baseDropDown').subscribe(data => {
+      this.baseDropDown = data[0];
+    });
+  }
 
   ngOnInit(): void {
     this.route.paramMap.pipe(
@@ -32,42 +46,28 @@ export class CurrencyDetailComponent implements OnInit {
         return ('currency/' + name);
       })
     );
-
-    this.base = history.state.base || 'EUR';
-    this.baseDropDown = history.state.baseDropDown;
-    this.date = history.state.date || this.formatDate(new Date());
-    this.name = this.router.url.split('/').pop();
-
-    const d = new Date(this.date);
-    d.setMonth(d.getMonth() - 12);
-
-    const currencies = {
-      start_at: this.formatDate(d),
-      end_at: this.date,
-      base: this.base,
-      name: this.name
-    };
-
-    this.fetchWithParams(currencies);
+    this.getWithParams();
   }
 
-  getWithParams(params: object): void {
-    let startAt: string;
-    let endAt: string;
-    let base: string;
-    for (const key in params) {
-      if (key === 'startAt') {
-        startAt = params[key];
-      } else if (key === 'endAt') {
-        endAt = params[key];
-      } else if (key === 'base') {
-        base = params[key];
+  getWithParams(): void {
+    this.history.subscribe(data => {
+      for (const key in data[0]) {
+        if (key === 'start_at') {
+          this.startAt = data[0][key];
+        } else if (key === 'end_at') {
+          this.endAt = data[0][key];
+        } else if (key === 'base') {
+          this.base = data[0][key];
+        }
       }
-    }
+    });
+
+    this.name = this.router.url.split('/').pop();
+
     const currencies = {
-      start_at: startAt,
-      end_at: endAt,
-      base,
+      start_at: this.startAt,
+      end_at: this.endAt,
+      base: this.base,
       name: this.name
     };
     this.fetchWithParams(currencies);
@@ -95,20 +95,6 @@ export class CurrencyDetailComponent implements OnInit {
     });
   }
 
-  formatDate(date: Date | string) {
-    const d = new Date(date);
-    let month = '' + (d.getMonth() + 1);
-    let day = '' + d.getDate();
-    const year = d.getFullYear();
-    if (month.length < 2) {
-        month = '0' + month;
-    }
-    if (day.length < 2) {
-        day = '0' + day;
-    }
-    return [year, month, day].join('-');
-  }
-
   getChartDatas() {
     const coppyObject = Object.assign({}, this.rates);
     // Getting the keys of JavaScript Object
@@ -125,11 +111,9 @@ export class CurrencyDetailComponent implements OnInit {
     const labels = [];
     const values = [];
     for (let i = 0; i < len; i++) {
-      // if (i & 2) { // Push values for even iterations only - better chart readability
-        key = Object.keys(sortedObject)[i];
-        labels.push(key);
-        values.push(Object.values(sortedObject[key]).pop());
-      // }
+      key = Object.keys(sortedObject)[i];
+      labels.push(key);
+      values.push(Object.values(sortedObject[key]).pop());
     }
     this.lineChartLabels = labels;
     this.lineChartData = [{ data: values, label: this.name }];
