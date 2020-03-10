@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
-import { History } from '../../models/History';
+import { Params } from '../../models/Params';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { CurrencyService } from 'src/app/services/currency.service';
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./currency-detail.component.scss']
 })
 export class CurrencyDetailComponent implements OnInit {
-  history: Observable<History[]>;
+  currencies: Observable<Params[]>;
   name: string;
   rates: any;
   base: any;
@@ -33,7 +33,7 @@ export class CurrencyDetailComponent implements OnInit {
     private currencyService: CurrencyService,
     private router: Router
   ) {
-    this.history = store.select('history');
+    this.currencies = store.select('currency');
     store.select('baseDropDown').subscribe(data => {
       this.baseDropDown = data[0];
     });
@@ -50,30 +50,13 @@ export class CurrencyDetailComponent implements OnInit {
   }
 
   getWithParams(): void {
-    this.history.subscribe(data => {
-      for (const key in data[0]) {
-        if (key === 'start_at') {
-          this.startAt = data[0][key];
-        } else if (key === 'end_at') {
-          this.endAt = data[0][key];
-        } else if (key === 'base') {
-          this.base = data[0][key];
-        }
-      }
-    });
-
     this.name = this.router.url.split('/').pop();
-
-    const currencies = {
-      start_at: this.startAt,
-      end_at: this.endAt,
-      base: this.base,
-      name: this.name
-    };
-    this.fetchWithParams(currencies);
+    this.currencies.subscribe(data => {
+      this.fetchWithParams(Object.assign(data[0], { name: this.name }));
+    });
   }
 
-  fetchWithParams(currencies: object): void {
+  fetchWithParams(currencies: Params): void {
     this.currencyService.getHistory(currencies).subscribe(data => {
       this.errShow = false;
       for (const key in data) {

@@ -1,28 +1,23 @@
 <header class="row">
-  <div *ngIf="date; then dateBlock else periodBlock"></div>
-
-  <ng-template #dateBlock>
     <div class="input-wrapper">
-      <label>Date:
-        <input maxlength='10' [(ngModel)]="date" (change)="changeParams(date, base)" />
+      <label *ngIf="startAt">Start At:
+        <input maxlength='10' [(ngModel)]="startAt" (change)="changeParams(startAt, endAt, base)" />
       </label>
-    </div>
-  </ng-template>
 
-  <ng-template #periodBlock>
-    <div class="input-wrapper">
-      <label>Start At:
-        <input maxlength='10' [(ngModel)]="startAt" (change)="changePeriodParams(startAt, endAt, base)" />
-      </label>
-      <label>End At:
-        <input maxlength='10' [(ngModel)]="endAt" (change)="changePeriodParams(startAt, endAt, base)" />
-      </label>
+      <div *ngIf="startAt; then startBlock else dateBlock"></div>
+      <ng-template #startBlock>
+        <label>End At:</label>
+        <input maxlength='10' [(ngModel)]="endAt" (change)="changeParams(startAt, endAt, base)" />
+      </ng-template>
+      <ng-template #dateBlock>
+        <label>Date</label>
+        <input maxlength='10' [(ngModel)]="endAt" (change)="changeParams(endAt, endAt, base)" />
+      </ng-template>
     </div>
-  </ng-template>
 
   <div class="dropdown-wrapper">
     <label>Base Currency:
-      <select [(ngModel)]="base" (change)="date ? changeParams(date, base) : changePeriodParams(startAt, endAt, base)">
+      <select [(ngModel)]="base" (change)="changeParams(startAt, endAt, base)">
         <option *ngFor="let option of baseDropDown">
           {{ option }}
         </option>

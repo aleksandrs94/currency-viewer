@@ -1,17 +1,10 @@
 import { Action } from '@ngrx/store';
 
 export const CHANGE_PARAM = '[PARAM] Change';
-export const CHANGE_HISTORY = '[HISTORY] Change';
 export const CHANGE_DROPDOWN = '[DROPDOWN] Change';
 
 export class ChangeParams implements Action {
     readonly type = CHANGE_PARAM;
-
-    constructor(public payload: object) {}
-}
-
-export class ChangeHistoryParams implements Action {
-    readonly type = CHANGE_HISTORY;
 
     constructor(public payload: object) {}
 }
@@ -22,4 +15,4 @@ export class ChangeDropDown implements Action {
   constructor(public payload: object) {}
 }
 
-export type Actions = ChangeParams | ChangeHistoryParams | ChangeDropDown;
+export type Actions = ChangeParams | ChangeDropDown;

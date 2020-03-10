@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { StoreModule } from '@ngrx/store';
 
-import { CurrencyReducer , HistoryReducer, DropReducer } from './reducers/currencies.reducer';
+import { CurrencyReducer, DropReducer } from './reducers/currencies.reducer';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CurrenciesComponent } from './components/currencies/currencies.component';
@@ -32,7 +32,6 @@ import { ChartComponent } from './components/chart/chart.component';
     BrowserModule,
     StoreModule.forRoot({
       currency: CurrencyReducer,
-      history: HistoryReducer,
       baseDropDown: DropReducer
     }),
     AppRoutingModule,

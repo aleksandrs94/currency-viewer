@@ -9,7 +9,6 @@ import * as CurrenciesActions from '../../actions/currencies.actions';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  @Input() date: string;
   @Input() startAt: string;
   @Input() endAt: string;
   @Input() base: string;
@@ -20,12 +19,23 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  changeParams(date: string, base: string): void {
-    this.store.dispatch(new CurrenciesActions.ChangeParams({ base, date }));
-  }
-
-  changePeriodParams(startAt: string, endAt: string, base: string): void {
-    this.store.dispatch(new CurrenciesActions.ChangeHistoryParams({ base, startAt, endAt }));
+  changeParams(startAt: string, endAt: string, base: string): void {
+    // Block should be replaced
+    if (!startAt) {
+      const d = new Date(endAt);
+      let month = '' + (d.getMonth() + 1);
+      let day = '' + d.getDate();
+      const year = d.getFullYear();
+      if (month.length < 2) {
+          month = '0' + month;
+      }
+      if (day.length < 2) {
+          day = '0' + day;
+      }
+      startAt = [year, month, day].join('-');
+    }
+    // Block should be replaced
+    this.store.dispatch(new CurrenciesActions.ChangeParams({ base, start_at: startAt, end_at: endAt }));
   }
 
 }

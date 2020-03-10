@@ -3,7 +3,7 @@ import { CurrencyService } from 'src/app/services/currency.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
-import { Currency } from 'src/app/models/Currency';
+import { Params } from 'src/app/models/Params';
 import * as CurrenciesActions from '../../actions/currencies.actions';
 @Component({
   selector: 'app-currencies',
@@ -11,10 +11,11 @@ import * as CurrenciesActions from '../../actions/currencies.actions';
   styleUrls: ['./currencies.component.scss']
 })
 export class CurrenciesComponent implements OnInit {
-  currencies: Observable<Currency[]>;
+  currencies: Observable<Params[]>;
   rates: any;
   base: any;
-  date: any;
+  endAt: any;
+  startAt: any;
   baseDropDown: Array<string>;
   errShow: boolean;
   errorText: string;
@@ -33,7 +34,7 @@ export class CurrenciesComponent implements OnInit {
     });
   }
 
-  fetchWithParams(currencies: Currency): void {
+  fetchWithParams(currencies: Params): void {
     this.currencyService.getCurrencies(currencies).subscribe(data => {
       this.errShow = false;
       this.baseDropDown = [];
@@ -49,7 +50,7 @@ export class CurrenciesComponent implements OnInit {
           // console.log(this.baseDropDown);
           // console.log(this.rates);
         } else if (key === 'date') {
-          this.date = data[key];
+          this.endAt = data[key];
         } else if (key === 'base') {
           this.base = data[key];
         }

@@ -2,7 +2,7 @@
 
   <app-header
     [base]="base"
-    [date]="date"
+    [endAt]="endAt"
     [baseDropDown]="baseDropDown"
   ></app-header>
 
@@ -22,7 +22,7 @@
       <a
         *ngIf="rate.key && rate.value"
         [routerLink]="['/currency', rate.key]"
-        [state]="{ base: base, baseDropDown: baseDropDown, date: date }"
+        [state]="{ base: base, baseDropDown: baseDropDown, endAt: endAt }"
         class="item"
       >
         <div class="name-wrapper">

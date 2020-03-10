@@ -1,8 +1,6 @@
-import { Currency } from './models/Currency';
-import { History } from './models/History';
+import { Params } from './models/Params';
 
 export interface AppState {
-  readonly currency: Currency[];
-  readonly history: History[];
+  readonly currency: Params[];
   readonly baseDropDown: Array<string>;
 }

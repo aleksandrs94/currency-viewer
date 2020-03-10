@@ -1,23 +1,15 @@
-import { Currency } from '../models/Currency';
-import { History } from '../models/History';
+import { Params } from '../models/Params';
 import * as CurrenciesAction from '../actions/currencies.actions';
 
+const end = new Date();
 const dd = new Date();
+const start = dd.setMonth(dd.getMonth() - 12);
 
-const initialState: Currency = {
-    base: 'EUR',
-    date: formatDate(dd),
-    rates: {}
-};
-
-const copy = new Date();
-const start = copy.setMonth(copy.getMonth() - 12);
-
-const initialHState: History = {
+const initialState: Params = {
     base: 'EUR',
     start_at: formatDate(start),
-    end_at: formatDate(dd),
-    rates: {}
+    end_at: formatDate(end),
+    name: ''
 };
 
 function formatDate(date: Date | string | number) {
@@ -34,18 +26,9 @@ function formatDate(date: Date | string | number) {
   return [year, month, day].join('-');
 }
 
-export function CurrencyReducer(state: Currency[] = [initialState], action: CurrenciesAction.Actions) {
+export function CurrencyReducer(state: Params[] = [initialState], action: CurrenciesAction.Actions) {
   switch (action.type) {
     case CurrenciesAction.CHANGE_PARAM:
-      return [action.payload];
-    default:
-      return state;
-  }
-}
-
-export function HistoryReducer(state: History[] = [initialHState], action: CurrenciesAction.Actions) {
-  switch (action.type) {
-    case CurrenciesAction.CHANGE_HISTORY:
       return [action.payload];
     default:
       return state;
