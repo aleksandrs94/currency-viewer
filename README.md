@@ -1,5 +1,12 @@
 # CurrencyViewer
 
+## Deploy with Docker
+Build image:
+Run `docker build --rm -f "Dockerfile" -t currencyviewer:v1 "."`. 
+
+Run image:
+Run `docker run --rm -d  -p 80:80/tcp currencyviewer:v1`
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.4.
 
 ## Development server
