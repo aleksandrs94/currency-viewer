@@ -10,7 +10,8 @@ const routes: Routes = [
     children: [
       { path: ':name', component: CurrencyDetailComponent }
     ]
-  }
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
