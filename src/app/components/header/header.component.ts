@@ -22,7 +22,9 @@ export class HeaderComponent implements OnInit {
   changeParams(startAt: string, endAt: string, base: string): void {
     // Block should be replaced
     if (!startAt) {
-      const d = new Date(endAt);
+      const dd = new Date(endAt) || new Date();
+      const start = dd.setMonth(dd.getMonth() - 12);
+      const d = new Date(start);
       let month = '' + (d.getMonth() + 1);
       let day = '' + d.getDate();
       const year = d.getFullYear();
