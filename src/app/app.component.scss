@@ -1,11 +1,13 @@
-@import 'src/mixins';
+@import "src/mixins";
 
 .container {
   margin: auto;
   width: 100%;
+
   @include lg {
     width: 900px;
   }
+
   @include xl {
     width: 1200px;
   }

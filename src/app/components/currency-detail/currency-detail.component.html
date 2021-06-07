@@ -6,11 +6,10 @@
     [baseDropDown]="baseDropDown"
   ></app-header>
 
-  <div *ngIf="errShow; then errorBlock else historyBlock"></div>
+  <div *ngIf="errShow; then errorBlock; else historyBlock"></div>
 
   <ng-template #errorBlock>
-    <app-error [message]="errorText">
-    </app-error>
+    <app-error [message]="errorText"> </app-error>
   </ng-template>
 
   <ng-template #historyBlock>
@@ -32,14 +31,14 @@
         <th>Date</th>
         <th>Value</th>
       </thead>
-        <tbody>
+      <tbody>
         <tr *ngFor="let rate of rates | keyvalue">
-        <td>{{ rate.key | date:'mediumDate' }}</td>
-        <td *ngFor="let r of rate.value | keyvalue">
-          {{ r.value | number:'1.4-4' }}
-        </td>
+          <td>{{ rate.key | date: "mediumDate" }}</td>
+          <td *ngFor="let r of rate.value | keyvalue">
+            {{ r.value | number: "1.4-4" }}
+          </td>
+        </tr>
       </tbody>
     </table>
   </ng-template>
-
 </div>

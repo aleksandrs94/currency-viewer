@@ -1,22 +1,38 @@
 <header class="row">
-    <div class="input-wrapper">
-      <label *ngIf="startAt">Start At:
-        <input maxlength='10' [(ngModel)]="startAt" (change)="changeParams(startAt, endAt, base)" />
-      </label>
+  <div class="input-wrapper">
+    <ng-template *ngIf="startAt; else dateBlock">
+      <label>Start At:</label>
+      <input
+        maxlength="10"
+        [(ngModel)]="startAt"
+        (change)="changeParams(startAt, endAt, base)"
+      />
 
-      <div *ngIf="startAt; then startBlock else dateBlock"></div>
-      <ng-template #startBlock>
-        <label>End At:</label>
-        <input maxlength='10' [(ngModel)]="endAt" (change)="changeParams(startAt, endAt, base)" />
-      </ng-template>
-      <ng-template #dateBlock>
-        <label>Date</label>
-        <input maxlength='10' [(ngModel)]="endAt" (change)="changeParams(endAt, endAt, base)" />
-      </ng-template>
-    </div>
+      <label>End At:</label>
+      <input
+        type="date"
+        maxlength="10"
+        [max]="todayDate"
+        [(ngModel)]="endAt"
+        (change)="changeParams(startAt, endAt, base)"
+      />
+    </ng-template>
+
+    <ng-template #dateBlock>
+      <label>Date</label>
+      <input
+        type="date"
+        maxlength="10"
+        [max]="todayDate"
+        [(ngModel)]="endAt"
+        (change)="changeParams(endAt, endAt, base)"
+      />
+    </ng-template>
+  </div>
 
   <div class="dropdown-wrapper">
-    <label>Base Currency:
+    <label
+      >Base Currency:
       <select [(ngModel)]="base" (change)="changeParams(startAt, endAt, base)">
         <option *ngFor="let option of baseDropDown">
           {{ option }}

@@ -1,4 +1,4 @@
-@import 'src/mixins';
+@import "src/mixins";
 
 .error-block {
   color: black;
@@ -6,10 +6,17 @@
   border: 1px solid #fcc2c3;
   text-align: center;
   margin: 20px auto;
+
+  img {
+    width: 100px;
+    height: 100px;
+  }
+
   p {
     margin-top: 0;
     font-size: 32px;
   }
+
   .block {
     margin: 10px 20px;
     text-align: left;
