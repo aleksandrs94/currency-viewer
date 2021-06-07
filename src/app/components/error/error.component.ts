@@ -6,9 +6,11 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./error.component.scss']
 })
 export class ErrorComponent implements OnInit {
+
   @Input() message: object;
-  msg: string;
-  reason: string;
+
+  public msg: string;
+  public reason: string;
 
   constructor() { }
 

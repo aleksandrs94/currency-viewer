@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import * as CurrenciesActions from '../../actions/currencies.actions';
@@ -8,18 +8,20 @@ import * as CurrenciesActions from '../../actions/currencies.actions';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
+
   @Input() startAt: string;
   @Input() endAt: string;
   @Input() base: string;
   @Input() baseDropDown: Array<string>;
 
-  constructor(private store: Store<AppState>) {}
+  public todayDate: string;
 
-  ngOnInit(): void {
+  constructor(private store: Store<AppState>) {
+    this.todayDate = new Date().toISOString().split('T')[0];
   }
 
-  changeParams(startAt: string, endAt: string, base: string): void {
+  public changeParams(startAt: string, endAt: string, base: string): void {
     // Block should be replaced
     if (!startAt) {
       const dd = new Date(endAt) || new Date();

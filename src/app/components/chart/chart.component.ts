@@ -8,6 +8,7 @@ import { Color, Label } from 'ng2-charts';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit {
+
   @Input() public lineChartData: ChartDataSets[];
   @Input() public lineChartLabels: Label[];
   @Input()

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { CurrencyService } from '../../services/currency.service';
 import { AppState } from '../../app.state';
 import { Params } from '../../models/Params';
-import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { CurrencyService } from 'src/app/services/currency.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-currency-detail',
@@ -33,8 +32,8 @@ export class CurrencyDetailComponent implements OnInit {
     private currencyService: CurrencyService,
     private router: Router
   ) {
-    this.currencies = store.select('currency');
-    store.select('baseDropDown').subscribe(data => {
+    this.currencies = this.store.select('currency');
+    this.store.select('baseDropDown').subscribe(data => {
       this.baseDropDown = data[0];
     });
   }
@@ -49,14 +48,14 @@ export class CurrencyDetailComponent implements OnInit {
     this.getWithParams();
   }
 
-  getWithParams(): void {
+  private getWithParams(): void {
     this.name = this.router.url.split('/').pop();
     this.currencies.subscribe(data => {
       this.fetchWithParams(Object.assign(data[0], { name: this.name }));
     });
   }
 
-  fetchWithParams(currencies: Params): void {
+  private fetchWithParams(currencies: Params): void {
     this.currencyService.getHistory(currencies).subscribe(data => {
       this.errShow = false;
       for (const key in data) {
@@ -74,17 +73,17 @@ export class CurrencyDetailComponent implements OnInit {
       this.errShow = true;
       this.errorText = error;
     }, () => {
-      this.getChartDatas();
+      this.getChartData();
     });
   }
 
-  getChartDatas() {
-    const coppyObject = Object.assign({}, this.rates);
+  private getChartData() {
+    const copyObject = Object.assign({}, this.rates);
     // Getting the keys of JavaScript Object
-    const sortedObject = Object.keys(coppyObject)
+    const sortedObject = Object.keys(copyObject)
     .sort().reduce((Obj, k) => {
         // Adding the key-value pair to the new object in sorted keys manner
-        Obj[k] = coppyObject[k];
+        Obj[k] = copyObject[k];
         return Obj;
     }, {});
 

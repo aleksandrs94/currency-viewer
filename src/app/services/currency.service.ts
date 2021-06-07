@@ -32,6 +32,9 @@ export class CurrencyService {
   }
 
   private errorHandler(error: HttpErrorResponse) {
-    return throwError({ reason: (error.error.error || 'Reason'), message: (error.message || 'Server error')});
+    return throwError({
+      code: error.error.error.code || error.status + ' ' + error.statusText || 'Unknown code',
+      message: error.error.error.message || error.message || 'Server error'
+    });
   }
 }

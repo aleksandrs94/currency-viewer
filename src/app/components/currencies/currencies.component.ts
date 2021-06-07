@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrencyService } from 'src/app/services/currency.service';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { CurrencyService } from '../../services/currency.service';
 import { AppState } from '../../app.state';
-import { Params } from 'src/app/models/Params';
+import { Params } from '../../models/Params';
 import * as CurrenciesActions from '../../actions/currencies.actions';
 @Component({
   selector: 'app-currencies',
@@ -28,13 +28,13 @@ export class CurrenciesComponent implements OnInit {
     this.getWithParams();
   }
 
-  getWithParams(): void {
+  private getWithParams(): void {
     this.currencies.subscribe(data => {
       this.fetchWithParams(data[0]);
     });
   }
 
-  fetchWithParams(currencies: Params): void {
+  private fetchWithParams(currencies: Params): void {
     this.currencyService.getCurrencies(currencies).subscribe(data => {
       this.errShow = false;
       this.baseDropDown = [];

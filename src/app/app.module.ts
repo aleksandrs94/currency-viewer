@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts';
 import { StoreModule } from '@ngrx/store';
 
@@ -34,6 +34,7 @@ import { ChartComponent } from './components/chart/chart.component';
       currency: CurrencyReducer,
       baseDropDown: DropReducer
     }),
+    RouterModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
