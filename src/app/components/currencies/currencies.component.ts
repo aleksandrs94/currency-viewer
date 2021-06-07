@@ -47,8 +47,6 @@ export class CurrenciesComponent implements OnInit {
           }
           this.baseDropDown.sort();
           this.store.dispatch(new CurrenciesActions.ChangeDropDown(this.baseDropDown));
-          // console.log(this.baseDropDown);
-          // console.log(this.rates);
         } else if (key === 'date') {
           this.endAt = data[key];
         } else if (key === 'base') {

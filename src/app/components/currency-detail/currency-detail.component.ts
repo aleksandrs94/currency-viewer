@@ -51,7 +51,8 @@ export class CurrencyDetailComponent implements OnInit {
   private getWithParams(): void {
     this.name = this.router.url.split('/').pop();
     this.currencies.subscribe(data => {
-      this.fetchWithParams(Object.assign(data[0], { name: this.name }));
+      const mappedParams = Object.assign({ name: this.name }, data[0]);
+      this.fetchWithParams(mappedParams);
     });
   }
 

@@ -3,7 +3,9 @@
     <ng-template *ngIf="startAt; else dateBlock">
       <label>Start At:</label>
       <input
-        maxlength="10"
+        type="date"
+        [min]="'1999-01-01'"
+        [max]="todayDate"
         [(ngModel)]="startAt"
         (change)="changeParams(startAt, endAt, base)"
       />
@@ -11,7 +13,7 @@
       <label>End At:</label>
       <input
         type="date"
-        maxlength="10"
+        [min]="'1999-01-01'"
         [max]="todayDate"
         [(ngModel)]="endAt"
         (change)="changeParams(startAt, endAt, base)"
@@ -22,7 +24,7 @@
       <label>Date</label>
       <input
         type="date"
-        maxlength="10"
+        [min]="'1999-01-01'"
         [max]="todayDate"
         [(ngModel)]="endAt"
         (change)="changeParams(endAt, endAt, base)"
