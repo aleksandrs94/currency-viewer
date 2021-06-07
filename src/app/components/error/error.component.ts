@@ -16,7 +16,7 @@ export class ErrorComponent implements OnInit {
 
   ngOnInit(): void {
     for (const key in this.message) {
-      if (key === 'reason') {
+      if (key === 'code') {
         this.reason = this.message[key];
       } else if (key === 'message') {
         this.msg = this.message[key];
