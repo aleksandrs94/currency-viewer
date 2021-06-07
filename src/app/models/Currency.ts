@@ -1,7 +1,10 @@
 export interface Currency {
-  rates: Rates;
-  base: string;
+  success: boolean,
+  historical: boolean,
   date: string;
+  timestamp: number,
+  base: string;
+  rates: Rates;
 }
 
 export interface Rates {

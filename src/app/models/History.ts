@@ -1,12 +1,14 @@
 export interface History {
-  rates: Rates;
-  start_at: string;
+  success: boolean;
+  timeseries: boolean;
+  start_date: string;
+  end_date: string;
   base: string;
-  end_at: string;
+  rates: Rates;
 }
 
 export interface Rates {
-  [key: string]: Currency;
+  [date: string]: Currency;
 }
 
 export interface Currency {
